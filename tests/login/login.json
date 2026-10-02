@@ -1,0 +1,11 @@
+{
+  "LOGIN_001": {
+    "dev": {
+      "user": "standard_user",
+      "pass": "wrong_password"
+    }
+  },
+  "LOGIN_002": {
+    "dev": { "user": "standard_user", "pass": "secret_sauce" }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "types": ["node"],
+    "module": "commonjs",
+    "baseUrl": "./",
+    "paths": {
+      "@pom/*": ["src/pom/*"],
+      "@fixtures/*": ["src/fixtures/*"],
+      "@utils/*": ["src/utils/*"],
+      "@data/*": ["src/data/*"]
+    }
+  }
+}
