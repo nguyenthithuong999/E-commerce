@@ -1,6 +1,6 @@
 name: E-commerce
 on:
-  workflow_dispath:
+  workflow_dispatch:
     inputs:
       env:
         description: "Select the target enviroment"
@@ -13,14 +13,14 @@ on:
         default: "dev"
 jobs:
   test:
-    name: Run tesst on ${{inputs.env}}
+    name: Run tesst on ${{ inputs.env }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/checkout@v4
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Test with Selected Environment
         run: |
-          echo "Target Env: ${{inputs.env}}"
+          echo "Target Env: ${{ inputs.env }}"
           npx playwright test
 
       - name: Upload Playwright report
