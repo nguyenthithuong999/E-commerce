@@ -1,29 +1,25 @@
 ### 1 🔐 Login Page 
-| case_id | module_id | type | description | note |
-|---|---|---|---|---|
-| LOGIN_001 | Login | Negative | Login fail với username/password sai. Kiểm tra hiển thị error message | Đã có |
-| LOGIN_002 | Login | Positive | Login thành công. Kiểm tra chuyển hướng và product title hiển thị | Đã có |
-| LOGIN_003 | Login | Negative | Để trống username, nhập password hợp lệ, bấm Login. Expected: Hiển thị error message "Epic sadface: Username is required" | Thiếu |
-| LOGIN_004 | Login | Negative | Nhập username hợp lệ, để trống password, bấm Login. Expected: Hiển thị error message "Epic sadface: Password is required" | Thiếu |
-| LOGIN_005 | Login | Negative | Để trống cả username và password, bấm Login. Expected: Hiển thị error message "Epic sadface: Username is required" | Thiếu |
-| LOGIN_006 | Login | Negative | Nhập locked_out_user / secret_sauce, bấm Login. Expected: Hiển thị error "Epic sadface: Sorry, this user has been locked out." | Thiếu |
-| LOGIN_007 | Login | Positive | Verify error message content chính xác. Đăng nhập sai và assert nội dung text của error message | Thiếu |
-| LOGIN_008 | Login | Positive | Đóng error message. Đăng nhập sai → error xuất hiện → bấm nút X đóng error → Expected: Error message biến mất | Thiếu |
+| case_id | module_id | type | description |
+|---|---|---|---|
+| LOGIN_001 | Login | Negative | Login fail với username/password sai. Kiểm tra hiển thị error message "Epic sadface: Username and password do not match any user in this service" → bấm nút X đóng error → Expected: Error message biến mất |
+| LOGIN_002 | Login | Negative | Để trống username, nhập password hợp lệ, bấm Login. Expected: Hiển thị error message "Epic sadface: Username is required" |
+| LOGIN_003 | Login | Negative | Nhập username hợp lệ, để trống password, bấm Login. Expected: Hiển thị error message "Epic sadface: Password is required" |
+| LOGIN_004 | Login | Negative | Để trống cả username và password, bấm Login. Expected: Hiển thị error message "Epic sadface: Username is required" |
+| LOGIN_005 | Login | Positive | Login thành công. Kiểm tra chuyển hướng và product title hiển thị |
 
 ### 2 📦 Product Page
-| case_id | module_id | type | description | note |
-|---|---|---|---|---|
-| PRODUCT_001 | Product | Positive | Bấm nút "Add to cart" ở sản phẩm đầu tiên. Kiểm tra nút đổi thành "Remove" và cart badge là 1 | Đã có |
-| PRODUCT_002 | Product | Positive | Bấm nút "Remove" của sản phẩm đó. Kiểm tra nút đổi ngược lại thành "Add to cart" và cart badge biến mất | Đã có |
-| PRODUCT_003 | Product | Positive | Chọn sort Price (low to high). Lấy giá sản phẩm và assert giá tăng dần | Đã có |
-| PRODUCT_004 | Product | Positive | Chọn sort Name (Z to A). Lấy tên sản phẩm và assert tên giảm dần | Đã có |
-| PRODUCT_005 | Product | Positive | Chọn sort "az" → Lấy tất cả tên sản phẩm → Expected: Danh sách tên đã sắp xếp tăng dần (A→Z) | Thiếu |
-| PRODUCT_006 | Product | Positive | Chọn sort "hilo" → Lấy tất cả giá → Expected: Danh sách giá sắp xếp giảm dần | Thiếu |
-| PRODUCT_007 | Product | Positive | Thêm nhiều sản phẩm vào giỏ hàng. Bấm "Add to cart" cho 3 sản phẩm khác nhau → Expected: Cart badge hiển thị 3, có 3 nút "Remove" | Thiếu |
-| PRODUCT_008 | Product | Positive | Add rồi Remove rồi Add lại → Expected: Cart badge = 1, nút hiển thị "Remove" | Thiếu |
-| PRODUCT_009 | Product | Positive | Bấm vào tên sản phẩm để xem chi tiết → Expected: Navigate đến trang chi tiết, hiển thị đúng tên + mô tả + giá + nút "Add to cart" | Thiếu |
-| PRODUCT_010 | Product | Positive | Verify số lượng sản phẩm trên trang → Expected: Hiển thị đúng 6 sản phẩm (mặc định của SauceDemo) | Thiếu |
-| PRODUCT_011 | Product | Positive | Add to cart từ trang chi tiết → Bấm "Add to cart" → Expected: Nút đổi thành "Remove", cart badge = 1 | Thiếu |
+| case_id | module_id | type | description |
+|---|---|---|---|
+| PRODUCT_001 | Product | Positive | Bấm nút "Add to cart" ở sản phẩm đầu tiên. Kiểm tra nút đổi thành "Remove" và cart badge là 1 | 
+| PRODUCT_002 | Product | Positive | Bấm nút "Add to cart" → Expected: Cart badge = 1. Bấm nút "Remove" của sản phẩm đó. Kiểm tra nút đổi ngược lại thành "Add to cart" và cart badge biến mất | 
+| PRODUCT_003 | Product | Positive | Chọn sort "az" → Lấy tất cả tên sản phẩm → Expected: Danh sách tên đã sắp xếp tăng dần (A→Z) | 
+| PRODUCT_004 | Product | Positive | Chọn sort "za" → Lấy tất cả tên sản phẩm → Expected: Danh sách tên đã sắp xếp giảm dần (Z→A) | 
+| PRODUCT_005 | Product | Positive | Chọn sort "lohi" → Lấy tất cả giá → Expected: Danh sách giá sắp xếp tăng dần | 
+| PRODUCT_006 | Product | Positive | Chọn sort "hilo" → Lấy tất cả giá → Expected: Danh sách giá sắp xếp giảm dần | 
+| PRODUCT_007 | Product | Positive | Thêm nhiều sản phẩm vào giỏ hàng. Bấm "Add to cart" cho 3 sản phẩm khác nhau → Expected: Cart badge hiển thị 3, có 3 nút "Remove" | 
+| PRODUCT_008 | Product | Positive | Bấm vào tên sản phẩm để xem chi tiết → Expected: Navigate đến trang chi tiết, hiển thị đúng tên + mô tả + giá + nút "Add to cart" | 
+| PRODUCT_009 | Product | Positive | Verify số lượng sản phẩm trên trang → Expected: Hiển thị đúng 6 sản phẩm (mặc định của SauceDemo) | 
+
 
 ### 3 🛒 Cart Page
 | case_id | module_id | type | description | note |

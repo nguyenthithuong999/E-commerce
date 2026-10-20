@@ -2,10 +2,32 @@
   "LOGIN_001": {
     "dev": {
       "user": "standard_user",
-      "pass": "wrong_password"
+      "pass": "wrong_password",
+      "msg": "Epic sadface: Username and password do not match any user in this service"
     }
   },
   "LOGIN_002": {
+    "dev": {
+      "user": "",
+      "pass": "secret_sauce",
+      "msg": "Epic sadface: Username is required"
+    }
+  },
+  "LOGIN_003": {
+    "dev": {
+      "user": "standard_user",
+      "pass": "",
+      "msg": "Epic sadface: Password is required"
+    }
+  },
+  "LOGIN_004": {
+    "dev": {
+      "user": "",
+      "pass": "",
+      "msg": "Epic sadface: Username is required"
+    }
+  },
+  "LOGIN_005": {
     "dev": { "user": "standard_user", "pass": "secret_sauce" }
   }
 }

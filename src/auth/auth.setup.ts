@@ -5,11 +5,13 @@ const authFile = path.resolve(__dirname, "../../.auth/user.json");
 
 base("authenticate", async ({ page }) => {
   const url = process.env.BASE_URL || "";
+  const user = process.env.AUTH_USER || "";
+  const pass = process.env.AUTH_PASS || "";
 
   // Login
   await page.goto(url);
-  await page.getByPlaceholder("Username").fill("standard_user");
-  await page.getByPlaceholder("Password").fill("secret_sauce");
+  await page.getByPlaceholder("Username").fill(user);
+  await page.getByPlaceholder("Password").fill(pass);
   await page.getByRole("button", { name: "Login" }).click();
 
   // Verify login succeeded

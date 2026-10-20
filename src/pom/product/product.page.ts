@@ -2,43 +2,37 @@ import { Page } from "@playwright/test";
 import { BasePage } from "@pom/base.page";
 
 export class ProductPage extends BasePage {
+  readonly locs;
+
   constructor(page: Page) {
     super(page);
-  }
-
-  get locs() {
-    return {
+    this.locs = {
       productTitle: this.page.getByText("Products", { exact: true }),
-      addToCartButtons: this.page.getByRole("button", { name: "Add to cart" }),
-      removeButtons: this.page.getByRole("button", { name: "Remove" }),
+      addToCartButton: this.page.getByRole("button", { name: "Add to cart" }),
+      itemName: this.page.getByTestId("inventory-item-name"),
+      itemDesc: this.page.getByTestId("inventory-item-desc"),
+      itemPrice: this.page.getByTestId("inventory-item-price"),
+      productList: this.page.getByTestId("inventory-item"),
+      addToCartButtons: (count: number) =>
+        this.page.getByRole("button", { name: "Add to cart" }).nth(count),
+      removeButtons: (count: number) =>
+        this.page.getByRole("button", { name: "Remove" }).nth(count),
       cartBadge: this.page.locator(".shopping_cart_badge"),
       sortDropdown: this.page.locator(".product_sort_container"),
-      productPrice: this.page.locator(".inventory_item_price"),
-      productName: this.page.locator(".inventory_item_name"),
+      itemLabel: (label: number) =>
+        this.page.locator(`[aria-label="View details for ${label}"]`).first(),
     };
   }
 
-  getAddToCartButton(count: number) {
-    return this.locs.addToCartButtons.nth(count);
-  }
-
-  getRemoveButton(count: number) {
-    return this.locs.removeButtons.nth(count);
-  }
-
-  getsortDropdown(label: string) {
-    return this.locs.sortDropdown.selectOption(label);
-  }
-
   async addToCart(count: number) {
-    await this.getAddToCartButton(count).click();
+    await this.locs.addToCartButtons(count).click();
   }
 
   async remove(count: number) {
-    await this.getRemoveButton(count).click();
+    await this.locs.removeButtons(count).click();
   }
 
   async sortBy(label: string) {
-    await this.getsortDropdown(label);
+    await this.locs.sortDropdown.selectOption(label);
   }
 }

@@ -2,17 +2,15 @@ import { Page } from "@playwright/test";
 import { BasePage } from "@pom/base.page";
 
 export class LoginPage extends BasePage {
+  readonly locs;
   constructor(page: Page) {
     super(page);
-  }
-
-  get locs() {
-    return {
+    this.locs = {
       usernameInput: this.page.getByPlaceholder("Username"),
       passwordInput: this.page.getByPlaceholder("Password"),
       loginButton: this.page.getByRole("button", { name: "Login" }),
-      productTitle: this.page.getByText("Products", { exact: true }),
-      errorMessage: this.page.locator('[data-test="error"]'),
+      errorButton: this.page.getByTestId("error-button"),
+      errorMessage: this.page.getByTestId("error"),
     };
   }
 
