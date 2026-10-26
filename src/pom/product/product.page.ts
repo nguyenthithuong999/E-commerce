@@ -18,6 +18,7 @@ export class ProductPage extends BasePage {
       removeButtons: (count: number) =>
         this.page.getByRole("button", { name: "Remove" }).nth(count),
       cartBadge: this.page.locator(".shopping_cart_badge"),
+      cartShopping: this.page.locator(".shopping_cart_link"),
       sortDropdown: this.page.locator(".product_sort_container"),
       itemLabel: (label: number) =>
         this.page.locator(`[aria-label="View details for ${label}"]`).first(),

@@ -109,6 +109,7 @@ test.describe("SauceDemo Product Feature", () => {
     // 2. Lấy danh sách tên và giá thực tế trên UI
     const actualNames = await productPage.locs.itemName.allTextContents();
     const actualPrices = await productPage.locs.itemPrice.allTextContents();
+    console.log("actualNames", actualNames);
 
     // 3. Verify danh sách tên sản phẩm
     const expectedNames = expectedProducts.map((p: any) => p.name);

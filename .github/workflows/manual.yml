@@ -42,3 +42,13 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 14
+      
+      - name: Send Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: always()
+        env:
+          SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: "Playwright Test Report (${{ inputs.env }})"
+          SLACK_MESSAGE: "Trạng thái chạy test trên môi trường ${{ inputs.env }} đã hoàn tất! Xem chi tiết trong GitHub Actions Artifacts."
+          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+          MSG_MINIMAL: true

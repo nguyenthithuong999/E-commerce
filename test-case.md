@@ -22,27 +22,22 @@
 
 
 ### 3 🛒 Cart Page
-| case_id | module_id | type | description | note |
-|---|---|---|---|---|
-| CART_001 | Cart | Positive | Add 2 sản phẩm, click cart, verify cart title, items count và checkout button | Đã có |
-| CART_002 | Cart | Positive | Xem giỏ hàng trống. Không add sản phẩm → Click cart icon → Expected: Hiển thị title "Your Cart", số cart item = 0 | Thiếu |
-| CART_003 | Cart | Positive | Xóa sản phẩm trong giỏ hàng. Add 2 sản phẩm → Vào cart → Bấm "Remove" 1 sản phẩm → Expected: Chỉ còn 1 item | Thiếu |
-| CART_004 | Cart | Positive | Xóa hết sản phẩm trong giỏ hàng. Add 1 sản phẩm → Vào cart → Remove → Expected: Cart rỗng, cart badge biến mất | Thiếu |
-| CART_005 | Cart | Positive | Bấm "Continue Shopping". Vào cart → Bấm "Continue Shopping" → Expected: Quay lại trang Products | Thiếu |
-| CART_006 | Cart | Positive | Verify thông tin sản phẩm trong cart. Add "Sauce Labs Backpack" → Vào cart → Expected: Tên, giá, số lượng hiển thị chính xác | Thiếu |
-| CART_007 | Cart | Positive | Bấm Checkout. Add sản phẩm → Vào cart → Bấm "Checkout" → Expected: Navigate đến trang Checkout Step One | Thiếu |
+| case_id | module_id | type | description | 
+|---|---|---|---|
+| CART_001 | Cart | Positive | Xem giỏ hàng trống. Không add sản phẩm → Click cart icon → Expected: Hiển thị title "Your Cart", số cart item = 0 | 
+| CART_002 | Cart | Positive | Xóa sản phẩm trong giỏ hàng. Add 2 sản phẩm → Vào cart → Bấm "Remove" 1 sản phẩm → Expected: Chỉ còn 1 item | 
+| CART_003 | Cart | Positive | Xóa hết sản phẩm trong giỏ hàng. Add 1 sản phẩm → Vào cart → Remove → Expected: Cart rỗng, cart badge biến mất | 
+| CART_004 | Cart | Positive | Bấm "Continue Shopping". Vào cart → Bấm "Continue Shopping" → Expected: Quay lại trang Products | 
+| CART_005 | Cart | Positive | Verify thông tin sản phẩm trong cart. Add "Sauce Labs Backpack" → Vào cart → Expected: Tên, giá, số lượng hiển thị chính xác | 
+| CART_006 | Cart | Positive | Bấm Checkout. Add sản phẩm → Vào cart → Bấm "Checkout" → Expected: Navigate đến trang Checkout Step One | 
 
 ### 4 💳 Checkout Page
-| case_id | module_id | type | description | note |
-|---|---|---|---|---|
-| CHECKOUT_001 | Checkout | Positive | Checkout thành công (happy path). Add sản phẩm → Cart → Checkout → Điền info → Finish → Expected: Hiển thị "Thank you for your order!" | Thiếu |
-| CHECKOUT_002 | Checkout | Negative | Checkout với first name rỗng → Continue → Expected: Error "First Name is required" | Thiếu |
-| CHECKOUT_003 | Checkout | Negative | Checkout với last name rỗng → Continue → Expected: Error "Last Name is required" | Thiếu |
-| CHECKOUT_004 | Checkout | Negative | Checkout với zip code rỗng → Continue → Expected: Error "Postal Code is required" | Thiếu |
-| CHECKOUT_005 | Checkout | Positive | Verify thông tin tổng kết đơn hàng ở Checkout Step Two → Expected: Hiển thị đúng tên sản phẩm, giá, Item total, Tax, Total | Thiếu |
-| CHECKOUT_006 | Checkout | Positive | Bấm Cancel ở Checkout Step One → Expected: Quay lại trang Cart | Thiếu |
-| CHECKOUT_007 | Checkout | Positive | Bấm Cancel ở Checkout Step Two → Expected: Quay lại trang Products | Thiếu |
-| CHECKOUT_008 | Checkout | Positive | Bấm "Back Home" sau khi hoàn tất → Expected: Quay lại trang Products | Thiếu |
-| NAV_001 | Navigation | Positive | Mở menu hamburger → Expected: Sidebar menu mở ra, có các options: All Items, About, Logout, Reset App State | Thiếu |
-| NAV_002 | Navigation | Positive | Logout. Mở menu → Click "Logout" → Expected: Navigate về trang login | Thiếu |
-| NAV_003 | Navigation | Positive | Reset App State. Add sản phẩm → Mở menu → Click "Reset App State" → Expected: Cart badge biến mất, tất cả nút "Remove" đổi thành "Add to cart" | Thiếu |
+| case_id | module_id | type | description | 
+|---|---|---|---|
+| CHECKOUT_001 | Checkout | Positive | Checkout thành công (happy path). Add sản phẩm → Cart → Checkout → Điền info → Finish → Expected: Hiển thị "Thank you for your order!".  Bấm "Back Home" sau khi hoàn tất → Expected: Quay lại trang Products | 
+| CHECKOUT_002 | Checkout | Negative | Checkout với first name rỗng → Continue → Expected: "Error: First Name is required" | 
+| CHECKOUT_003 | Checkout | Negative | Checkout với last name rỗng → Continue → Expected: "Error: Last Name is required" | 
+| CHECKOUT_004 | Checkout | Negative | Checkout với zip code rỗng → Continue → Expected: "Error: Postal Code is required" | 
+| CHECKOUT_005 | Checkout | Positive | Verify thông tin tổng kết đơn hàng ở Checkout Step Two → Expected: Hiển thị đúng tên sản phẩm, giá, Item total | 
+| CHECKOUT_006 | Checkout | Positive | Bấm Cancel ở Checkout Step One → Expected: Quay lại trang Cart | 
+| CHECKOUT_007 | Checkout | Positive | Bấm Cancel ở Checkout Step Two → Expected: Quay lại trang Products | 

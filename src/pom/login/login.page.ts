@@ -3,6 +3,7 @@ import { BasePage } from "@pom/base.page";
 
 export class LoginPage extends BasePage {
   readonly locs;
+
   constructor(page: Page) {
     super(page);
     this.locs = {
