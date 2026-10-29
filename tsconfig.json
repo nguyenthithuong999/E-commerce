@@ -3,12 +3,13 @@
     "target": "ES2020",
     "types": ["node"],
     "module": "commonjs",
-    "baseUrl": "./",
+    "strict": true,
+    "noImplicitAny": true,
     "paths": {
-      "@pom/*": ["src/pom/*"],
-      "@fixtures/*": ["src/fixtures/*"],
-      "@utils/*": ["src/utils/*"],
-      "@data/*": ["src/data/*"]
+      "@pom/*": ["./src/pom/*"],
+      "@fixtures/*": ["./src/fixtures/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@data/*": ["./src/data/*"]
     }
   }
 }

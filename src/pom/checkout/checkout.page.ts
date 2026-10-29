@@ -1,9 +1,22 @@
-import { Page } from "@playwright/test";
-
+import { Locator, Page } from "@playwright/test";
 import { BasePage } from "@pom/base.page";
 
 export class CheckoutPage extends BasePage {
-  readonly locs;
+  readonly locs: {
+    readonly checkoutTitle: Locator;
+    readonly firstName: Locator;
+    readonly lastName: Locator;
+    readonly postalCode: Locator;
+    readonly errorField: Locator;
+    readonly completeHeader: Locator;
+    readonly itemName: Locator;
+    readonly itemPrice: Locator;
+    readonly totalItem: Locator;
+    readonly continueButton: Locator;
+    readonly cancelButton: Locator;
+    readonly finishButton: Locator;
+    readonly backButton: Locator;
+  };
 
   constructor(page: Page) {
     super(page);
@@ -26,5 +39,39 @@ export class CheckoutPage extends BasePage {
       finishButton: this.page.getByRole("button", { name: "Finish" }),
       backButton: this.page.getByRole("button", { name: "Back Home" }),
     };
+  }
+
+  /**
+   * Fills customer checkout information on Step One and proceeds.
+   */
+  async fillInformation(firstName: string, lastName: string, postalCode: string): Promise<void> {
+    await this.locs.firstName.fill(firstName);
+    await this.locs.lastName.fill(lastName);
+    await this.locs.postalCode.fill(postalCode);
+    await this.locs.continueButton.click();
+  }
+
+  async clickContinue(): Promise<void> {
+    await this.locs.continueButton.click();
+  }
+
+  async clickCancel(): Promise<void> {
+    await this.locs.cancelButton.click();
+  }
+
+  async clickFinish(): Promise<void> {
+    await this.locs.finishButton.click();
+  }
+
+  async clickBackHome(): Promise<void> {
+    await this.locs.backButton.click();
+  }
+
+  async getItemNames(): Promise<string[]> {
+    return await this.locs.itemName.allTextContents();
+  }
+
+  async getItemPrices(): Promise<string[]> {
+    return await this.locs.itemPrice.allTextContents();
   }
 }

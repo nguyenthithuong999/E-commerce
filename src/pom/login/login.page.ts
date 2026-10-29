@@ -1,8 +1,14 @@
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 import { BasePage } from "@pom/base.page";
 
 export class LoginPage extends BasePage {
-  readonly locs;
+  readonly locs: {
+    readonly usernameInput: Locator;
+    readonly passwordInput: Locator;
+    readonly loginButton: Locator;
+    readonly errorButton: Locator;
+    readonly errorMessage: Locator;
+  };
 
   constructor(page: Page) {
     super(page);
@@ -15,9 +21,13 @@ export class LoginPage extends BasePage {
     };
   }
 
-  async login(user: string, pass: string) {
+  async login(user: string, pass: string): Promise<void> {
     await this.locs.usernameInput.fill(user);
     await this.locs.passwordInput.fill(pass);
     await this.locs.loginButton.click();
+  }
+
+  async closeErrorMessage(): Promise<void> {
+    await this.locs.errorButton.click();
   }
 }

@@ -1,25 +1,18 @@
 import { expect } from "@playwright/test";
 import { test } from "@fixtures/index";
+import { ProductPage } from "@pom/product/product.page";
+import { CartPage } from "@pom/cart/cart.page";
 
-const addProducts = async (productPage: any, cartPage: any, products: any) => {
-  for (const p of products) {
-    await productPage.addToCart(p);
+const addProductsAndProceedToCheckout = async (
+  productPage: ProductPage,
+  cartPage: CartPage,
+  productIndices: number[],
+): Promise<void> => {
+  for (const index of productIndices) {
+    await productPage.addToCart(index);
   }
-  await productPage.locs.cartShopping.click();
-
-  await cartPage.locs.checkoutButton.click();
-};
-
-const registerCheckout = async (
-  checkoutPage: any,
-  firstName: string,
-  lastName: string,
-  postalCode: string,
-) => {
-  await checkoutPage.locs.firstName.fill(firstName);
-  await checkoutPage.locs.lastName.fill(lastName);
-  await checkoutPage.locs.postalCode.fill(postalCode);
-  await checkoutPage.locs.continueButton.click();
+  await productPage.header.openCart();
+  await cartPage.clickCheckout();
 };
 
 test.describe("SauceDemo Checkout Feature", () => {
@@ -28,72 +21,73 @@ test.describe("SauceDemo Checkout Feature", () => {
   });
 
   test(
-    "TC001",
-    { tag: ["@CHECKOUT_001"] },
+    "TC001: Complete checkout process successfully and return to Products page",
+    { tag: ["@CHECKOUT_001", "@smoke", "@regression"] },
     async ({ productPage, cartPage, checkoutPage, conf }) => {
       const { firstName, lastName, postalCode } = conf;
 
-      await addProducts(productPage, cartPage, [0]);
-      await registerCheckout(checkoutPage, firstName, lastName, postalCode);
-      await checkoutPage.locs.finishButton.click();
+      await addProductsAndProceedToCheckout(productPage, cartPage, [0]);
+      await checkoutPage.fillInformation(firstName, lastName, postalCode);
+      await checkoutPage.clickFinish();
 
       await expect(checkoutPage.locs.completeHeader).toBeVisible();
-      await checkoutPage.locs.backButton.click();
+      await checkoutPage.clickBackHome();
     },
   );
 
   test(
-    "TC002",
-    { tag: ["@CHECKOUT_002"] },
+    "TC002: Display error message when First Name is empty",
+    { tag: ["@CHECKOUT_002", "@regression"] },
     async ({ productPage, cartPage, checkoutPage, conf }) => {
       const { firstName, lastName, postalCode, msg } = conf;
 
-      await addProducts(productPage, cartPage, [0]);
-      await registerCheckout(checkoutPage, firstName, lastName, postalCode);
-      await expect(checkoutPage.locs.errorField).toHaveText(msg);
+      await addProductsAndProceedToCheckout(productPage, cartPage, [0]);
+      await checkoutPage.fillInformation(firstName, lastName, postalCode);
+      await expect(checkoutPage.locs.errorField).toHaveText(msg!);
     },
   );
 
   test(
-    "TC003",
-    { tag: ["@CHECKOUT_003"] },
+    "TC003: Display error message when Last Name is empty",
+    { tag: ["@CHECKOUT_003", "@regression"] },
     async ({ productPage, cartPage, checkoutPage, conf }) => {
       const { firstName, lastName, postalCode, msg } = conf;
 
-      await addProducts(productPage, cartPage, [0]);
-      await registerCheckout(checkoutPage, firstName, lastName, postalCode);
-      await expect(checkoutPage.locs.errorField).toHaveText(msg);
+      await addProductsAndProceedToCheckout(productPage, cartPage, [0]);
+      await checkoutPage.fillInformation(firstName, lastName, postalCode);
+      await expect(checkoutPage.locs.errorField).toHaveText(msg!);
     },
   );
 
   test(
-    "TC004",
-    { tag: ["@CHECKOUT_004"] },
+    "TC004: Display error message when Postal Code is empty",
+    { tag: ["@CHECKOUT_004", "@regression"] },
     async ({ productPage, cartPage, checkoutPage, conf }) => {
       const { firstName, lastName, postalCode, msg } = conf;
 
-      await addProducts(productPage, cartPage, [0]);
-      await registerCheckout(checkoutPage, firstName, lastName, postalCode);
-      await expect(checkoutPage.locs.errorField).toHaveText(msg);
+      await addProductsAndProceedToCheckout(productPage, cartPage, [0]);
+      await checkoutPage.fillInformation(firstName, lastName, postalCode);
+      await expect(checkoutPage.locs.errorField).toHaveText(msg!);
     },
   );
 
   test(
-    "TC005",
-    { tag: ["@CHECKOUT_005"] },
+    "TC005: Verify order summary items, unit prices and Item total at Step Two",
+    { tag: ["@CHECKOUT_005", "@regression"] },
     async ({ productPage, cartPage, checkoutPage, conf }) => {
       const { firstName, lastName, postalCode, products } = conf;
       const actualId = products.map((p: any) => p.id);
-      await addProducts(productPage, cartPage, actualId);
-      await registerCheckout(checkoutPage, firstName, lastName, postalCode);
 
-      await expect(checkoutPage.page).toHaveURL("checkout-step-two.html");
+      await addProductsAndProceedToCheckout(productPage, cartPage, actualId);
+      await checkoutPage.fillInformation(firstName, lastName, postalCode);
 
-      const actualNames = await checkoutPage.locs.itemName.allTextContents();
+      await expect(checkoutPage.page).toHaveURL(/checkout-step-two\.html/);
+
+      const actualNames = await checkoutPage.getItemNames();
       const expectedNames = products.map((p: any) => p.name);
       expect(actualNames).toEqual(expectedNames);
 
-      const actualPrices = await checkoutPage.locs.itemPrice.allTextContents();
+      const actualPrices = await checkoutPage.getItemPrices();
       const expectedPrices = products.map((p: any) => `$${p.price}`);
       expect(actualPrices).toEqual(expectedPrices);
 
@@ -108,31 +102,31 @@ test.describe("SauceDemo Checkout Feature", () => {
   );
 
   test(
-    "TC006",
-    { tag: ["@CHECKOUT_006"] },
+    "TC006: Click Cancel at Checkout Step One to return to Cart page",
+    { tag: ["@CHECKOUT_006", "@regression"] },
     async ({ productPage, cartPage, checkoutPage }) => {
-      await addProducts(productPage, cartPage, [0]);
+      await addProductsAndProceedToCheckout(productPage, cartPage, [0]);
 
-      await expect(checkoutPage.page).toHaveURL("checkout-step-one.html");
-      await checkoutPage.locs.cancelButton.click();
+      await expect(checkoutPage.page).toHaveURL(/checkout-step-one\.html/);
+      await checkoutPage.clickCancel();
 
-      await expect(cartPage.page).toHaveURL("cart.html");
+      await expect(cartPage.page).toHaveURL(/cart\.html/);
       await expect(cartPage.locs.cartTitle).toBeVisible();
     },
   );
 
   test(
-    "TC007",
-    { tag: ["@CHECKOUT_007"] },
+    "TC007: Click Cancel at Checkout Step Two to return to Products page",
+    { tag: ["@CHECKOUT_007", "@regression"] },
     async ({ productPage, cartPage, checkoutPage, conf }) => {
       const { firstName, lastName, postalCode } = conf;
-      await addProducts(productPage, cartPage, [0]);
+      await addProductsAndProceedToCheckout(productPage, cartPage, [0]);
 
-      await registerCheckout(checkoutPage, firstName, lastName, postalCode);
-      await expect(checkoutPage.page).toHaveURL("checkout-step-two.html");
-      await checkoutPage.locs.cancelButton.click();
+      await checkoutPage.fillInformation(firstName, lastName, postalCode);
+      await expect(checkoutPage.page).toHaveURL(/checkout-step-two\.html/);
+      await checkoutPage.clickCancel();
 
-      await expect(productPage.page).toHaveURL("inventory.html");
+      await expect(productPage.page).toHaveURL(/inventory\.html/);
       await expect(productPage.locs.productTitle).toBeVisible();
     },
   );
